@@ -1,0 +1,21 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "feat/soroban-contracts-scaffold",
+    "fix/w2-issue-1725-lifecycle-event-publication",
+    "main",
+    "origin"
+  ],
+  "parent": {
+    "feat/soroban-contracts-scaffold": "main",
+    "fix/w2-issue-1725-lifecycle-event-publication": "main",
+    "main": null,
+    "origin": "main"
+  },
+  "order": [
+    "main",
+    "feat/soroban-contracts-scaffold",
+    "fix/w2-issue-1725-lifecycle-event-publication",
+    "origin"
+  ]
+}
