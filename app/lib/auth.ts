@@ -80,10 +80,6 @@ function getPreviousKeyId(): string {
   return process.env.JWT_PREVIOUS_KEY_ID?.trim() || "streampay-previous";
 }
 
-function toBase64url(value: string): string {
-  return Buffer.from(value).toString("base64url");
-}
-
 function getConfiguredJwtSecrets(): JwtKeyConfig[] {
   const currentSecret = resolveJwtSecret();
   const secrets: JwtKeyConfig[] = [{ kid: getCurrentKeyId(), secret: currentSecret }];
@@ -129,6 +125,9 @@ function getJwtSecretCandidates(token: string): string[] {
   return orderedSecrets;
 }
 
+// HS256 keys are symmetric: publishing the key material lets anyone mint valid
+// tokens. Only key metadata (kid/alg) is exposed so clients can see which key
+// ids are active during rotation; the secret itself never leaves the server.
 export function getJwtJwks() {
   return {
     keys: getConfiguredJwtSecrets().map((entry) => ({
@@ -136,7 +135,6 @@ export function getJwtJwks() {
       use: "sig",
       alg: "HS256",
       kid: entry.kid,
-      k: toBase64url(entry.secret),
     })),
   };
 }
